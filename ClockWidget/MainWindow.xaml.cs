@@ -29,7 +29,7 @@ namespace ClockWidget
             dt.Start();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void ExitClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -74,6 +74,12 @@ namespace ClockWidget
         private void HandleText(int hs, int min, int sec)
         {
             TimeText.Text = $"{hs:D2}:{min:D2}:{sec:D2}";
+        }
+
+        private void AlwaysOnTopClick(object sender, RoutedEventArgs e)
+        {
+            Topmost = !Topmost;
+            AlwaysOnTopMenuItem.IsChecked = Topmost;
         }
     }
 }

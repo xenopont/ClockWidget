@@ -15,7 +15,9 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Exit" Click="MenuItem_Click"/>
+                <MenuItem Header="Always on top" Name="AlwaysOnTopMenuItem" Click="AlwaysOnTopClick"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="ExitClick"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <Image Source="/Face.png" Width="256" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="0,0,0,0"/>
