@@ -7,4 +7,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Face.png" />
+    <None Remove="HourHand.png" />
+    <None Remove="MinuteHand.png" />
+    <None Remove="SecondHand.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Sources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Face.png" />
+    <Resource Include="HourHand.png" />
+    <Resource Include="MinuteHand.png" />
+    <Resource Include="SecondHand.png" />
+  </ItemGroup>
+
 </Project>

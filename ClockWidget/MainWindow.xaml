@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClockWidget"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStyle="None" AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
+        SnapsToDevicePixels="True" ResizeMode="NoResize">
+    <Window.Background>
+        <SolidColorBrush Color="Beige" Opacity="0.0"/>
+    </Window.Background>
     <Grid>
-
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Exit" Click="MenuItem_Click"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Image Source="/Face.png" Width="256" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0"/>
+        <Image Source="/HourHand.png" Width="8" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="123,0,0,0"
+               Name="HourHand" RenderTransformOrigin="0.5,0.5"/>
+        <Image Source="/MinuteHand.png" Width="4" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,0,0,0"
+               Name="MinuteHand" RenderTransformOrigin="0.5,0.5"/>
+        <Image Source="/SecondHand.png" Width="2" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,0,0,0"
+               Name="SecondHand" RenderTransformOrigin="0.5,0.5"/>
     </Grid>
 </Window>
