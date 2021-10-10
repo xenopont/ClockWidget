@@ -25,7 +25,7 @@ namespace ClockWidget
 
             DispatcherTimer dt = new();
             dt.Tick += new EventHandler(TimerTick);
-            dt.Interval = new TimeSpan(0, 0, 0, 0, 16);
+            dt.Interval = new TimeSpan(0, 0, 0, 0, 25);
             dt.Start();
         }
 
@@ -53,6 +53,7 @@ namespace ClockWidget
             HandleSecondHand(now.Second, now.Millisecond);
             HandleMinuteHand(now.Minute, now.Second);
             HandleHourHand(now.Hour, now.Minute, now.Second);
+            HandleText(now.Hour, now.Minute, now.Second);
         }
 
         private void HandleSecondHand(int sec, int ms)
@@ -68,6 +69,11 @@ namespace ClockWidget
         private void HandleHourHand(int hs, int min, int sec)
         {
             HourHand.RenderTransform = new RotateTransform(DegreesInHourHH * hs + DegreesInMinuteHH * min + DegreesInSecondHH * sec);
+        }
+
+        private void HandleText(int hs, int min, int sec)
+        {
+            TimeText.Text = $"{hs:D2}:{min:D2}:{sec:D2}";
         }
     }
 }
