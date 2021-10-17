@@ -81,5 +81,21 @@ namespace ClockWidget
             Topmost = !Topmost;
             AlwaysOnTopMenuItem.IsChecked = Topmost;
         }
+
+        private static string ReadRegistryString(string keyName, string valueName, string defaultValue)
+        {
+            try
+            {
+                object? v = Microsoft.Win32.Registry.GetValue(keyName, valueName, defaultValue);
+                if (v?.ToString() is string s)
+                {
+                    return s;
+                }
+                return defaultValue;
+            }
+            catch { }
+
+            return defaultValue;
+        }
     }
 }
