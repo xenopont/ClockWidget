@@ -34,7 +34,7 @@ namespace ClockWidget
             Close();
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void WindowMouseDownHandler(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
