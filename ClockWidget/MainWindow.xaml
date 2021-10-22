@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClockWidget"
         mc:Ignorable="d"
-        Title="MainWindow" Height="334" Width="272"
+        Title="Clock Widget" Height="334" Width="272"
         WindowStyle="None" AllowsTransparency="True"
         MouseDown="WindowMouseDownHandler"
         SnapsToDevicePixels="True" ResizeMode="NoResize">
