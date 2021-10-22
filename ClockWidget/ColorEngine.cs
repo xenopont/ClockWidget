@@ -26,14 +26,58 @@ namespace ClockWidget
 
         private static Color NextRandom()
         {
-            double hue = random.NextDouble() * 360;
-            double saturation = random.NextDouble();
-            double brightness = random.NextDouble();
+            const double BRIGHTNESS_MAX = 0.65;
+            const double BRIGHTNESS_MIN = 0.30;
+            const double ERROR_DOUBLE = 0.0000001;
+            const double ERROR_COLOR = 0.004;
 
-            return FromHSV(hue, saturation, brightness);
+            static byte ColorComponent(double component)
+            {
+                if (component - 1.0 > ERROR_DOUBLE)
+                {
+                    component = 1.0;
+                }
+                return (byte) (component * 255);
+            }
+
+            double r = random.NextDouble();
+            double g = random.NextDouble();
+            double b = random.NextDouble();
+
+            if (r < ERROR_COLOR && g < ERROR_COLOR && b < ERROR_COLOR)
+            {
+                byte c = (byte) (System.Math.Sqrt(BRIGHTNESS_MIN * BRIGHTNESS_MIN / 3.0) * 255);
+                return Color.FromArgb(255, c, c, c);
+            }
+
+            double brightness = CalculateBrightness(r, g, b);
+            double adjustK = 1.0;
+
+            if (brightness > BRIGHTNESS_MAX)
+            {
+                adjustK = BRIGHTNESS_MAX / brightness;
+            }
+            else if (brightness < BRIGHTNESS_MIN)
+            {
+                adjustK = BRIGHTNESS_MIN / brightness;
+            }
+
+            if (System.Math.Abs(1.0 - adjustK) > ERROR_DOUBLE)
+            {
+                r *= adjustK;
+                g *= adjustK;
+                b *= adjustK;
+            }
+
+            return Color.FromArgb(255, ColorComponent(r), ColorComponent(g), ColorComponent(b));
         }
 
-        private static Color FromHSV(double hue, double saturation, double brightness)
+        private static double CalculateBrightness(in double r, in double g, in double b)
+        {
+            return System.Math.Sqrt(r * r * 0.241 + g * g * 0.691 + b * b * 0.068);
+        }
+
+        /*private static Color FromHSV(double hue, double saturation, double brightness)
         {
             static byte ColorComponent(double component, double m)
             {
@@ -59,6 +103,6 @@ namespace ClockWidget
                 ColorComponent(rgb[1], m),
                 ColorComponent(rgb[2], m)
                 );
-        }
+        }*/
     }
 }
