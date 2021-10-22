@@ -52,8 +52,8 @@ namespace ClockWidget
             HandleChevron(now);
         }
 
-        private readonly Duration chevronColorAnimationDuration = new(TimeSpan.FromMilliseconds(500));
-        private const long chevronColorTTL = TimeSpan.TicksPerSecond * 1;
+        private readonly Duration chevronColorAnimationDuration = new(TimeSpan.FromMilliseconds(750));
+        private const long chevronColorTTL = TimeSpan.TicksPerSecond * 180;
         private long lastChevronTick = 0;
         private void HandleChevron(in DateTime now)
         {
