@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace ClockWidget
@@ -18,6 +19,8 @@ namespace ClockWidget
         private const double DegreesInSecondHH = 360.0 / 43200.0;
         private const double DegreesInMinuteHH = 360.0 / 720.0;
         private const double DegreesInHourHH = 360.0 / 12.0;
+
+        private readonly ColorEngine ColorEngine = new();
 
         public MainWindow()
         {
@@ -44,12 +47,36 @@ namespace ClockWidget
 
         private void TimerTick(object? sender, EventArgs e)
         {
-            HandleHandles();
+            DateTime now = DateTime.Now;
+            HandleHandles(now);
+            HandleChevron(now);
         }
 
-        private void HandleHandles()
+        private readonly Duration chevronColorAnimationDuration = new(TimeSpan.FromSeconds(1));
+        private const long chevronColorTTL = TimeSpan.TicksPerSecond * 72;
+        private long lastChevronTick = 0;
+        private void HandleChevron(in DateTime now)
         {
-            DateTime now = DateTime.Now;
+            if (now.Ticks - lastChevronTick < chevronColorTTL)
+            {
+                return;
+            }
+
+            if (Application.Current.Resources["ChevronBrush"] is not SolidColorBrush currentBrush)
+            {
+                return;
+            }
+
+            SolidColorBrush newBrush = new(currentBrush.Color);
+            ColorAnimation animation = new(ColorEngine.NextColor, chevronColorAnimationDuration);
+            newBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            Application.Current.Resources["ChevronBrush"] = newBrush;
+
+            lastChevronTick = now.Ticks;
+        }
+
+        private void HandleHandles(in DateTime now)
+        {
             HandleSecondHand(now.Second, now.Millisecond);
             HandleMinuteHand(now.Minute, now.Second);
             HandleHourHand(now.Hour, now.Minute, now.Second);

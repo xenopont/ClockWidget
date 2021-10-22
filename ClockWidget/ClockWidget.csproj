@@ -10,9 +10,11 @@
 
   <ItemGroup>
     <None Remove="Face.png" />
+    <None Remove="FaseShadow.png" />
     <None Remove="HourHand.png" />
     <None Remove="MinuteHand.png" />
     <None Remove="SecondHand.png" />
+    <None Remove="Shield.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +28,11 @@
 
   <ItemGroup>
     <Resource Include="Face.png" />
+    <Resource Include="FaseShadow.png" />
     <Resource Include="HourHand.png" />
     <Resource Include="MinuteHand.png" />
     <Resource Include="SecondHand.png" />
+    <Resource Include="Shield.png" />
   </ItemGroup>
 
 </Project>

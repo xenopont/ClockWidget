@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ClockWidget"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush Color="#FFF08000" x:Key="ChevronBrush"/>
     </Application.Resources>
 </Application>
