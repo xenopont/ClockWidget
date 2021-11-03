@@ -21,6 +21,8 @@ namespace ClockWidget
         private const double DegreesInHourHH = 360.0 / 12.0;
 
         private readonly ColorEngine ColorEngine = new();
+        private readonly ApplicationSettings Settings = new();
+        private readonly string ApplicationSettingsFilename = ApplicationSettings.FileName();
 
         public MainWindow()
         {
@@ -30,6 +32,10 @@ namespace ClockWidget
             dt.Tick += new EventHandler(TimerTick);
             dt.Interval = new TimeSpan(0, 0, 0, 0, 25);
             dt.Start();
+
+            // settings
+            Settings.Load(ApplicationSettingsFilename);
+            ApplySettings();
         }
 
         private void ExitClick(object sender, RoutedEventArgs e)
@@ -52,8 +58,8 @@ namespace ClockWidget
             HandleChevron(now);
         }
 
-        private readonly Duration chevronColorAnimationDuration = new(TimeSpan.FromMilliseconds(750));
-        private const long chevronColorTTL = TimeSpan.TicksPerSecond * 180;
+        private readonly Duration chevronColorAnimationDuration = new(TimeSpan.FromMilliseconds(2550));
+        private const long chevronColorTTL = TimeSpan.TicksPerSecond * 472;
         private long lastChevronTick = 0;
         private void HandleChevron(in DateTime now)
         {
@@ -106,23 +112,13 @@ namespace ClockWidget
         private void AlwaysOnTopClick(object sender, RoutedEventArgs e)
         {
             Topmost = !Topmost;
-            AlwaysOnTopMenuItem.IsChecked = Topmost;
+            AlwaysOnTopMenuItem.IsChecked = Settings.Values.AlwaysOnTop = Topmost;
+            Settings.Save(ApplicationSettingsFilename);
         }
 
-        private static string ReadRegistryString(string keyName, string valueName, string defaultValue)
+        private void ApplySettings()
         {
-            try
-            {
-                object? v = Microsoft.Win32.Registry.GetValue(keyName, valueName, defaultValue);
-                if (v?.ToString() is string s)
-                {
-                    return s;
-                }
-                return defaultValue;
-            }
-            catch { }
-
-            return defaultValue;
+            Topmost = AlwaysOnTopMenuItem.IsChecked = Settings.Values.AlwaysOnTop;
         }
     }
 }
