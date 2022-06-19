@@ -36,6 +36,7 @@ namespace ClockWidget
             // settings
             Settings.Load(ApplicationSettingsFilename);
             ApplySettings();
+            AutostartMenuItem.IsChecked = ApplicationSettings.IsAutostart();
         }
 
         private void ExitClick(object sender, RoutedEventArgs e)
@@ -119,6 +120,18 @@ namespace ClockWidget
         private void ApplySettings()
         {
             Topmost = AlwaysOnTopMenuItem.IsChecked = Settings.Values.AlwaysOnTop;
+        }
+
+        private void AutostartMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            if (ApplicationSettings.IsAutostart())
+            {
+                AutostartMenuItem.IsChecked = !ApplicationSettings.DeleteAutostart();
+            }
+            else
+            {
+                AutostartMenuItem.IsChecked = ApplicationSettings.SetAutostart();
+            }
         }
     }
 }

@@ -16,6 +16,7 @@
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Always on top" Name="AlwaysOnTopMenuItem" Click="AlwaysOnTopClick"/>
+                <MenuItem Header="Start with Windows" Name="AutostartMenuItem" Click="AutostartMenuItemClick"/>
                 <Separator/>
                 <MenuItem Header="Exit" Click="ExitClick"/>
             </ContextMenu>
