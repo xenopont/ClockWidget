@@ -6,6 +6,8 @@ namespace ClockWidget
     public record SettingsRecord
     {
         public bool AlwaysOnTop = false;
+        public double Top = 0;
+        public double Left = 0;
     }
 
     public class ApplicationSettings

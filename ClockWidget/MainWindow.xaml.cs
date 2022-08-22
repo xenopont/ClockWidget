@@ -49,6 +49,9 @@ namespace ClockWidget
             if (e.ChangedButton == MouseButton.Left)
             {
                 DragMove();
+                Settings.Values.Top = Top;
+                Settings.Values.Left = Left;
+                Settings.Save(ApplicationSettingsFilename);
             }
         }
 
@@ -120,6 +123,8 @@ namespace ClockWidget
         private void ApplySettings()
         {
             Topmost = AlwaysOnTopMenuItem.IsChecked = Settings.Values.AlwaysOnTop;
+            Top = Settings.Values.Top;
+            Left = Settings.Values.Left;
         }
 
         private void AutostartMenuItemClick(object sender, RoutedEventArgs e)
