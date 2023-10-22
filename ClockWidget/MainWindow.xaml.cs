@@ -37,6 +37,15 @@ namespace ClockWidget
             Settings.Load(ApplicationSettingsFilename);
             ApplySettings();
             AutostartMenuItem.IsChecked = ApplicationSettings.IsAutostart();
+
+            // weather
+            Weather.AddListener(WeatherListener);
+            Weather.Start();
+        }
+
+        private void WeatherListener(Weather.WeatherData data)
+        {
+            WeatherTextBox.Text = $"{data.City}, {data.CountryCode} {Math.Round(data.Temperature, 0)}°C";
         }
 
         private void ExitClick(object sender, RoutedEventArgs e)

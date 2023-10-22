@@ -38,6 +38,7 @@
         <Image Source="/SecondHand.png" Width="2" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,8,0,0"
                Name="SecondHand" RenderTransformOrigin="0.5,0.5"/>
         <Image Source="/Shield.png" Width="256" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="8,8,0,0"/>
-        <!--TextBlock Name="MsgBox" HorizontalAlignment="Center" Margin="0,167,0,144" Width="158">HELLO WORLD</TextBlock-->
+        <TextBlock Name="WeatherTextBox" HorizontalAlignment="Center" Margin="0,167,0,144" Width="158" VerticalAlignment="Center"
+                   ScrollViewer.VerticalScrollBarVisibility="Disabled" TextAlignment="Center">HELLO WORLD</TextBlock>
     </Grid>
 </Window>
