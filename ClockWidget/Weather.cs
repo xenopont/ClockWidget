@@ -32,7 +32,7 @@ namespace ClockWidget
         public delegate void Listener(WeatherData data);
 
         private static readonly HashSet<Listener> listeners = [];
-        
+
         public static void AddListener(Listener newListener)
         {
             _ = listeners.Add(newListener);
@@ -136,26 +136,35 @@ namespace ClockWidget
                 return;
             }
 
-            string ip = await GetIP();
-            if (ip == ERROR_DETECTING_IP )
+            try
             {
-                return;
+                string ip = await GetIP();
+                if (ip == ERROR_DETECTING_IP)
+                {
+                    return;
+                }
+
+                GeoData? geoData = await GetGeoData(ip);
+                if (geoData?.status != "success" || geoData?.lat == null || geoData?.lon == null || geoData?.city == null || geoData?.countryCode == null)
+                {
+                    return;
+                }
+
+                MeteoData? meteoData = await GetMeteoData(geoData.lat, geoData.lon);
+                if (meteoData?.current?.temperature_2m == null)
+                {
+                    return;
+                }
+
+                CurrentData = new(geoData.city, geoData.countryCode, meteoData.current.temperature_2m, DateTime.Now);
+                NotifyListeners(CurrentData);
+            }
+            catch (Exception)
+            {
+                // Do nothing
             }
 
-            GeoData? geoData = await GetGeoData(ip);
-            if (geoData?.status != "success" || geoData?.lat == null || geoData?.lon == null || geoData?.city == null || geoData?.countryCode == null)
-            {
-                return;
-            }
 
-            MeteoData? meteoData = await GetMeteoData(geoData.lat, geoData.lon);
-            if (meteoData?.current?.temperature_2m == null)
-            {
-                return;
-            }
-
-            CurrentData = new (geoData.city, geoData.countryCode, meteoData.current.temperature_2m, DateTime.Now);
-            NotifyListeners(CurrentData);
 
             await Task.Delay(UPDATE_TIMEOUT);
             _ = PeriodicallyUpdateData();
