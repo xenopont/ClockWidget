@@ -45,7 +45,9 @@ namespace ClockWidget
 
         private void WeatherListener(Weather.WeatherData data)
         {
-            WeatherTextBox.Text = $"{data.City}, {data.CountryCode} {Math.Round(data.Temperature, 0)}°C";
+            // to get rid of double/float "-0"
+            int intTemperature = (int)Math.Round(data.Temperature, 0);
+            WeatherTextBox.Text = $"{data.City}, {data.CountryCode} {intTemperature}°C";
         }
 
         private void ExitClick(object sender, RoutedEventArgs e)
