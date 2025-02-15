@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClockWidget"
         mc:Ignorable="d"
         Title="Clock Widget" Height="334" Width="272"
         WindowStyle="None" AllowsTransparency="True"
@@ -15,30 +14,49 @@
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Always on top" Name="AlwaysOnTopMenuItem" Click="AlwaysOnTopClick"/>
-                <MenuItem Header="Start with Windows" Name="AutostartMenuItem" Click="AutostartMenuItemClick"/>
+                <MenuItem Header="Always on top" Name="AlwaysOnTopMenuItem"
+                          Click="AlwaysOnTopClick"/>
+                <MenuItem Header="Start with Windows" Name="AutostartMenuItem"
+                          Click="AutostartMenuItemClick"/>
                 <Separator/>
                 <MenuItem Header="Exit" Click="ExitClick"/>
             </ContextMenu>
         </Grid.ContextMenu>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="128" Margin="8,136,0,0">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Width="128" Margin="8,136,0,0">
             <Border Background="{DynamicResource ChevronBrush}" Height="160"/>
-            <Border Background="{DynamicResource ChevronBrush}" Height="12" CornerRadius="0,0,64,64"></Border>
+            <Border Background="{DynamicResource ChevronBrush}" Height="12"
+                    CornerRadius="0,0,64,64"></Border>
         </StackPanel>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="8,263,0,0" FontSize="25" Foreground="#FFFFFFFF"
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="8,263,0,0" FontSize="25" Foreground="#FFFFFFFF"
                    Name="TimeText" Padding="16,4,16,4">
             23:59:59
         </TextBlock>
-        <Image Source="/FaseShadow.png" Width="272" Height="272" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="0,0,0,0"/>
-        <Image Source="/Face.png" Width="256" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="8,8,0,0"/>
-        <Image Source="/HourHand.png" Width="8" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="131,8,0,0"
-               Name="HourHand" RenderTransformOrigin="0.5,0.5"/>
-        <Image Source="/MinuteHand.png" Width="4" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="133,8,0,0"
-               Name="MinuteHand" RenderTransformOrigin="0.5,0.5"/>
-        <Image Source="/SecondHand.png" Width="2" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,8,0,0"
-               Name="SecondHand" RenderTransformOrigin="0.5,0.5"/>
-        <Image Source="/Shield.png" Width="256" Height="256" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="8,8,0,0"/>
-        <TextBlock Name="WeatherTextBox" HorizontalAlignment="Center" Margin="0,167,0,144" Width="158" VerticalAlignment="Center"
-                   ScrollViewer.VerticalScrollBarVisibility="Disabled" TextAlignment="Center">HELLO WORLD</TextBlock>
+        <Image Source="/FaseShadow.png" Width="272" Height="272"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="0,0,0,0"/>
+        <Image Source="/Face.png" Width="256" Height="256"
+               HorizontalAlignment="Left" VerticalAlignment="Top" 
+               Margin="8,8,0,0"/>
+        <TextBlock Name="WeatherTextBox" HorizontalAlignment="Center" 
+                   Margin="0,167,0,144" Width="158" VerticalAlignment="Center"
+                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                   TextAlignment="Center">HELLO WORLD</TextBlock>
+        <Image Source="/HourHand.png" Width="8" Height="256"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="131,8,0,0" Name="HourHand"
+               RenderTransformOrigin="0.5,0.5"/>
+        <Image Source="/MinuteHand.png" Width="4" Height="256"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="133,8,0,0" Name="MinuteHand"
+               RenderTransformOrigin="0.5,0.5"/>
+        <Image Source="/SecondHand.png" Width="2" Height="256"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="135,8,0,0" Name="SecondHand"
+               RenderTransformOrigin="0.5,0.5"/>
+        <Image Source="/Shield.png" Width="256" Height="256"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="8,8,0,0"/>
     </Grid>
 </Window>
