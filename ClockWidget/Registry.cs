@@ -1,20 +1,21 @@
-﻿using System.Reflection;
-
-namespace ClockWidget
+﻿namespace ClockWidget
 {
-    internal class Registry
+    internal static class Registry
     {
         public static string ReadString(string keyName, string valueName, string defaultValue)
         {
             try { 
-                Microsoft.Win32.RegistryKey? key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, false);
-                object? value = key?.GetValue(valueName);
+                var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, false);
+                var value = key?.GetValue(valueName);
                 if (value != null)
                 {
                     return value.ToString() ?? defaultValue;
                 }
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             return defaultValue;
         }
@@ -23,7 +24,7 @@ namespace ClockWidget
         {
             try
             {
-                Microsoft.Win32.RegistryKey? key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, true);
+                var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, true);
                 key?.SetValue(valueName, value);
                 return true;
             }
@@ -36,7 +37,7 @@ namespace ClockWidget
         {
             try
             {
-                Microsoft.Win32.RegistryKey? key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, true);
+                var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName, true);
                 key?.DeleteValue(valueName);
                 return true;
             }

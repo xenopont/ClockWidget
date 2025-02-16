@@ -5,14 +5,14 @@ namespace ClockWidget
 {
     public record SettingsRecord
     {
-        public bool AlwaysOnTop = false;
-        public double Top = 0;
-        public double Left = 0;
+        public bool AlwaysOnTop;
+        public double Top;
+        public double Left;
     }
 
     public class ApplicationSettings
     {
-        public SettingsRecord Values { get; set; } = new();
+        public SettingsRecord Values { get; private set; } = new();
 
         public void Load(string filename)
         {
@@ -21,7 +21,7 @@ namespace ClockWidget
                 Values = new SettingsRecord();
                 return;
             }
-            byte[] bytes = File.ReadAllBytes(filename);
+            var bytes = File.ReadAllBytes(filename);
             JsonSerializerOptions options = new()
             {
                 IncludeFields = true,
@@ -40,27 +40,27 @@ namespace ClockWidget
             File.WriteAllBytes(filename, bytes);
         }
 
-        private static string appFileName = "";
-        private static string appBasePath = "";
+        private static string _appFileName = "";
+        private static string _appBasePath = "";
         private static string ApplicationFileName
         {
             get
             {
-                if (appFileName == "")
+                if (_appFileName == "")
                 {
-                    appFileName = System.Environment.ProcessPath ?? "";
+                    _appFileName = Environment.ProcessPath ?? "";
                 }
 
-                return appFileName;
+                return _appFileName;
             }
         }
         private static string ApplicationBasePath { 
             get {
-                if (appBasePath == "") {
-                    appBasePath = Path.GetDirectoryName(ApplicationFileName) ?? Directory.GetCurrentDirectory();
+                if (_appBasePath == "") {
+                    _appBasePath = Path.GetDirectoryName(ApplicationFileName) ?? Directory.GetCurrentDirectory();
                 }
 
-                return appBasePath;
+                return _appBasePath;
             }
         }
 
@@ -79,11 +79,8 @@ namespace ClockWidget
 
         public static bool SetAutostart()
         {
-            if (ApplicationFileName == "")
-            {
-                return false;
-            }
-            return Registry.SetValue(AutostartRegistryKeyName, ClockWidgetValueName, ApplicationFileName);
+            return ApplicationFileName != "" &&
+                   Registry.SetValue(AutostartRegistryKeyName, ClockWidgetValueName, ApplicationFileName);
         }
 
         public static bool DeleteAutostart()

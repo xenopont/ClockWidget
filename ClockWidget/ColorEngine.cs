@@ -4,16 +4,16 @@ namespace ClockWidget
 {
     internal class ColorEngine
     {
-        public enum Pattern
+        private enum Pattern
         {
             Random,
         }
 
-        public Pattern ActivePattern { get; set; } = Pattern.Random;
+        private static Pattern ActivePattern => Pattern.Random;
 
-        public Color NextColor { get => GenerateNextColor(); }
+        public static Color NextColor => GenerateNextColor();
 
-        private Color GenerateNextColor()
+        private static Color GenerateNextColor()
         {
             return ActivePattern switch
             {
@@ -22,59 +22,55 @@ namespace ClockWidget
             };
         }
 
-        private static readonly System.Random random = new();
+        private static readonly Random RandomNumberGenerator = new();
 
         private static Color NextRandom()
         {
-            const double BRIGHTNESS_MAX = 0.65;
-            const double BRIGHTNESS_MIN = 0.30;
-            const double ERROR_DOUBLE = 0.0000001;
-            const double ERROR_COLOR = 0.004;
+            const double brightnessMax = 0.65;
+            const double brightnessMin = 0.30;
+            const double errorDouble = 0.0000001;
+            const double errorColor = 0.004;
+
+            var r = RandomNumberGenerator.NextDouble();
+            var g = RandomNumberGenerator.NextDouble();
+            var b = RandomNumberGenerator.NextDouble();
+
+            if (r < errorColor && g < errorColor && b < errorColor)
+            {
+                var c = (byte) (Math.Sqrt(brightnessMin * brightnessMin / 3.0) * 255);
+                return Color.FromArgb(255, c, c, c);
+            }
+
+            var brightness = CalculateBrightness(r, g, b);
+
+            var adjustK = brightness switch
+            {
+                > brightnessMax => brightnessMax / brightness,
+                < brightnessMin => brightnessMin / brightness,
+                _ => 1.0
+            };
+
+            if (Math.Abs(1.0 - adjustK) < errorDouble)
+                return Color.FromArgb(255, ColorComponent(r), ColorComponent(g), ColorComponent(b));
+            r *= adjustK;
+            g *= adjustK;
+            b *= adjustK;
+
+            return Color.FromArgb(255, ColorComponent(r), ColorComponent(g), ColorComponent(b));
 
             static byte ColorComponent(double component)
             {
-                if (component - 1.0 > ERROR_DOUBLE)
+                if (component - 1.0 > errorDouble)
                 {
                     component = 1.0;
                 }
                 return (byte) (component * 255);
             }
-
-            double r = random.NextDouble();
-            double g = random.NextDouble();
-            double b = random.NextDouble();
-
-            if (r < ERROR_COLOR && g < ERROR_COLOR && b < ERROR_COLOR)
-            {
-                byte c = (byte) (System.Math.Sqrt(BRIGHTNESS_MIN * BRIGHTNESS_MIN / 3.0) * 255);
-                return Color.FromArgb(255, c, c, c);
-            }
-
-            double brightness = CalculateBrightness(r, g, b);
-            double adjustK = 1.0;
-
-            if (brightness > BRIGHTNESS_MAX)
-            {
-                adjustK = BRIGHTNESS_MAX / brightness;
-            }
-            else if (brightness < BRIGHTNESS_MIN)
-            {
-                adjustK = BRIGHTNESS_MIN / brightness;
-            }
-
-            if (System.Math.Abs(1.0 - adjustK) > ERROR_DOUBLE)
-            {
-                r *= adjustK;
-                g *= adjustK;
-                b *= adjustK;
-            }
-
-            return Color.FromArgb(255, ColorComponent(r), ColorComponent(g), ColorComponent(b));
         }
 
         private static double CalculateBrightness(in double r, in double g, in double b)
         {
-            return System.Math.Sqrt(r * r * 0.241 + g * g * 0.691 + b * b * 0.068);
+            return Math.Sqrt(r * r * 0.241 + g * g * 0.691 + b * b * 0.068);
         }
 
         /*private static Color FromHSV(double hue, double saturation, double brightness)

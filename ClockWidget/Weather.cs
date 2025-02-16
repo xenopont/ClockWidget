@@ -1,47 +1,33 @@
-﻿using Microsoft.VisualBasic;
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 namespace ClockWidget
 {
     internal static class Weather
     {
-        public record WeatherData
+        public record WeatherData(string City, string CountryCode, double Temperature, DateTime LastUpdatedAt)
         {
-            public string City;
-            public string CountryCode;
-            public double Temperature;
-            public DateTime LastUpdatedAt;
-
-            public WeatherData(string city, string countryCode, double temperature, DateTime lastUpdatedAt)
-            {
-                this.City = city;
-                this.CountryCode = countryCode;
-                this.Temperature = temperature;
-                this.LastUpdatedAt = lastUpdatedAt;
-            }
+            public readonly string City = City;
+            public readonly string CountryCode = CountryCode;
+            public readonly double Temperature = Temperature;
+            public DateTime LastUpdatedAt = LastUpdatedAt;
         }
         public static WeatherData CurrentData { get; private set; } = new("Unknown", "UN", 0.0, DateTime.Now);
 
         // Listeners
         public delegate void Listener(WeatherData data);
 
-        private static readonly HashSet<Listener> listeners = [];
+        private static readonly HashSet<Listener> Listeners = [];
 
         public static void AddListener(Listener newListener)
         {
-            _ = listeners.Add(newListener);
+            _ = Listeners.Add(newListener);
         }
 
         public static void RemoveListener(Listener oldListener)
         {
-            _ = listeners.Remove(oldListener);
-            if (listeners.Count == 0)
+            _ = Listeners.Remove(oldListener);
+            if (Listeners.Count == 0)
             {
                 Stop();
             }
@@ -49,40 +35,39 @@ namespace ClockWidget
 
         public static void RemoveAllListeners()
         {
-            listeners.Clear();
+            Listeners.Clear();
             Stop();
         }
 
         private static void NotifyListeners(WeatherData current)
         {
-            if (listeners.Count == 0)
+            if (Listeners.Count == 0)
             {
                 return;
             }
-            foreach (Listener handler in listeners)
+            foreach (var handler in Listeners)
             {
                 handler(current);
             }
         }
 
         // Start() and Stop()
-        private static bool canUpdateWeatherData = false;
+        private static bool _canUpdateWeatherData = false;
         public static void Start()
         {
-            if (canUpdateWeatherData)
+            if (_canUpdateWeatherData)
             {
                 return;
             }
-            canUpdateWeatherData = true;
+            _canUpdateWeatherData = true;
             _ = PeriodicallyUpdateData();
         }
 
         public static void Stop()
         {
-            canUpdateWeatherData = false;
+            _canUpdateWeatherData = false;
         }
 
-#pragma warning disable IDE1006 // Naming Styles
         private record GeoData
         {
             public required string city { get; set; }
@@ -101,7 +86,6 @@ namespace ClockWidget
         {
             public required MeteoDataCurrent current { get; set; }
         }
-#pragma warning restore IDE1006 // Naming Styles
 
         private const string ERROR_DETECTING_IP = "127.0.0.1";
         private static readonly HttpClient client = new();
@@ -131,20 +115,20 @@ namespace ClockWidget
         private const int UPDATE_TIMEOUT = 1800000; // 30 min.
         private static async Task PeriodicallyUpdateData()
         {
-            if (!canUpdateWeatherData)
+            if (!_canUpdateWeatherData)
             {
                 return;
             }
 
             try
             {
-                string ip = await GetIP();
+                var ip = await GetIP();
                 if (ip == ERROR_DETECTING_IP)
                 {
                     return;
                 }
 
-                GeoData? geoData = await GetGeoData(ip);
+                var geoData = await GetGeoData(ip);
                 if (geoData?.status != "success" || geoData?.lat == null || geoData?.lon == null || geoData?.city == null || geoData?.countryCode == null)
                 {
                     return;
