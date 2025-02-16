@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace ClockWidget
+namespace WidgetUI
 {
     internal static class Weather
     {

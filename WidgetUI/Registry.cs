@@ -1,4 +1,4 @@
-﻿namespace ClockWidget
+﻿namespace WidgetUI
 {
     internal static class Registry
     {

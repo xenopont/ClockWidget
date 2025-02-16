@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace ClockWidget
+namespace WidgetUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

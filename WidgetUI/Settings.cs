@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.IO;
 
-namespace ClockWidget
+namespace WidgetUI
 {
     public record SettingsRecord
     {

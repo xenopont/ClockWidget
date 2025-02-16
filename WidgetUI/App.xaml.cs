@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ClockWidget
+namespace WidgetUI
 {
     /// <summary>
     /// Interaction logic for App.xaml

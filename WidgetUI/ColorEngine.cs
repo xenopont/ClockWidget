@@ -1,8 +1,8 @@
 ﻿using System.Windows.Media;
 
-namespace ClockWidget
+namespace WidgetUI
 {
-    internal class ColorEngine
+    internal static class ColorEngine
     {
         private enum Pattern
         {
