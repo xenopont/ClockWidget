@@ -103,7 +103,7 @@ namespace ClockWidget
 
         private void HandleSecondHand(int sec, int ms)
         {
-            SecondHand.RenderTransform = new RotateTransform(DegreeInSecondSh * sec + DegreeInMillisecondSh * ms);
+            SecondHand.RenderTransform = new RotateTransform(DegreeInSecondSh * sec /*+ DegreeInMillisecondSh * ms*/);
         }
 
         private void HandleMinuteHand(int min, int sec)
