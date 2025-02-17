@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WidgetUI", "WidgetUI\Widget
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceConnectors", "ServiceConnectors\ServiceConnectors.csproj", "{828EFA46-7A05-4875-AD2D-FC8762A7A04F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceConnectors.Test", "ServiceConnectors.Test\ServiceConnectors.Test.csproj", "{87A68B78-0902-4868-8D18-839ABC6BE125}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{828EFA46-7A05-4875-AD2D-FC8762A7A04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828EFA46-7A05-4875-AD2D-FC8762A7A04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828EFA46-7A05-4875-AD2D-FC8762A7A04F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A68B78-0902-4868-8D18-839ABC6BE125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A68B78-0902-4868-8D18-839ABC6BE125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A68B78-0902-4868-8D18-839ABC6BE125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A68B78-0902-4868-8D18-839ABC6BE125}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
