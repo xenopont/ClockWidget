@@ -38,11 +38,12 @@ public sealed class IpClientTests
     public async Task GetExternalIp_ShouldReturnCachedIp_WhenCalledWithinInvalidateInterval()
     {
         // Arrange
-        var cachedIp = "192.168.1.1";
+        const string cachedIp = "192.168.1.1";
         var initialTime = DateTime.Now;
         _mockNowProvider.SetupSequence(time => time.Now)
             .Returns(initialTime)
-            .Returns(initialTime.AddSeconds(InvalidateIntervalSeconds / 2));
+            .Returns(initialTime.AddSeconds(InvalidateIntervalSeconds / 2.0
+                ));
         _mockHttpClient.Setup(client => client.GetStringAsync(It.IsAny<string>())).ReturnsAsync(cachedIp);
 
         await _ipClient.GetExternalIp(); // First call to update the IP
